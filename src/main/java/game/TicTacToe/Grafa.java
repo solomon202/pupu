@@ -59,6 +59,7 @@ public class Grafa extends JComponent  {
   protected void paintComponent(Graphics graphics) {
   super. paintComponent(graphics);
   drawGrid(graphics);
+  drawXO(graphics);
 
   }
   
@@ -70,9 +71,49 @@ public class Grafa extends JComponent  {
 		 graphics. setColor(Color.BLUE); // цвет линий
 		 for (int i = 1; i < 3; i++) { // i пробегает значения от 1 до 2 включительно (при i = 3) выход из цикла
 		 graphics.drawLine( 0, dh * i, w, dh * i); // горизонтальная линия
-		 graphics.drawLine( dw * i, 0, dw * i, h);; // вертикальная линия
+		 graphics.drawLine( dw * i, 0, dw * i, h);// вертикальная линия
 
 }
-	
-}
+		 }
+		 
+		 void drawX(int i, int j, Graphics graphics) {
+		 graphics. setColor (Color. BLACK);
+		 int dw = getWidth() / 3;
+		 int dh = getHeight() / 3;
+		 int x = i * dw;
+		 int y = j * dh;
+		 //линия от верхнего левого угла в правый нижний
+		 graphics. drawLine(x, y, x + dw, y + dh);
+		 //линия от левого нижнего угла до правого верхнего
+		 graphics. drawLine(x,  y + dh, x + dw, y);
+		 
+		 }
+		 void draw0(int i, int j, Graphics graphics) {
+		 graphics. setColor(Color. BLACK);
+		 int dw = getWidth() / 3;
+		 int dh = getHeight() / 3;
+		 int x = i * dw;
+		 int y = j * dh;
+		 //магия с непонятным умножением и делением для того чтобы нолик был чуть вытянут по вертикали и не касался боковых "стенок" ячейки
+		 graphics. drawOval( x + 5 * dw / 100, y, dw * 9 / 10, dh) ;
+
+		 }
+		 
+		 
+		 void drawXO(Graphics graphics) {
+		//вложенные циклы
+		for (int i = 0; i < 3; ++i) {
+	    	for (int j = 0; j < 3; ++j) {
+		//если в данной ячейке крестик
+		if (field[i][j] == FIELD_X) {
+		drawX(i, j, graphics);
+		// то для нолика
+		}
+		else if (field[i][j] == FIELD_0) {
+		draw0(i, j, graphics);
+		}
+		}
+		}
+		}
+
 }

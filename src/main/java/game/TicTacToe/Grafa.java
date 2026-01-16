@@ -19,6 +19,7 @@ public class Grafa extends JComponent  {
 	public Grafa() {
 		//событие от нажатия 
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+		//двух мерный массив два вниз по три в лево 
 		field = new int[3][3]; // выделям память под массив при создании компонента
 		initGame();
 
@@ -37,17 +38,22 @@ public class Grafa extends JComponent  {
 	@Override
 	protected void processMouseEvent(MouseEvent mouseEvent) {
 	super.processMouseEvent(mouseEvent);
-	
+	//если кнопка нажата 
 	if(mouseEvent.getButton() == MouseEvent.BUTTON1) {
+		//получить координаты 
 	int x = mouseEvent.getX(); // координата х клика
 	int y = mouseEvent.getY(); // координат у клика
-	// переводим координаты в индексы ячейки в массиве field
+	// переводим координаты конкретной  клетки её индекс i j это номер ячейки 
 	int i = (int) ((float) x / getWidth() * 3);
+	System.out.print(i); 
 	int j = (int) ((float) y / getHeight() * 3);
+	System.out.println(j); 
 	//проверям, что выбранная ячейка пуста и туда можно сходить
 	if (field[i][j] == FIELD_EMPTY) {
+	//	System.out.println(field[i][j]); 
 	//проверка чей ход, если - ставим крестик, если 0 - ставим нолик
 	field[i][j] = isXturn?FIELD_X:FIELD_0;
+	 
 	isXturn = !isXturn; // меняем флаг хода.
 	repaint(); // перерисовка компонента, это вызовет метод paintComponent()
 	    }
@@ -58,7 +64,9 @@ public class Grafa extends JComponent  {
   @Override
   protected void paintComponent(Graphics graphics) {
   super. paintComponent(graphics);
+  //ресуем линии 
   drawGrid(graphics);
+  //ресуем крестики нолики 
   drawXO(graphics);
 
   }
@@ -105,12 +113,18 @@ public class Grafa extends JComponent  {
 		for (int i = 0; i < 3; ++i) {
 	    	for (int j = 0; j < 3; ++j) {
 		//если в данной ячейке крестик
+	    		//вставляем в номер ячейки цифру 10 
 		if (field[i][j] == FIELD_X) {
 		drawX(i, j, graphics);
+	//	System.out.println(field[i][j]); 
+		
 		// то для нолика
 		}
 		else if (field[i][j] == FIELD_0) {
 		draw0(i, j, graphics);
+		
+		
+	//	System.out.println(field[i][j]); 
 		}
 		}
 		}
